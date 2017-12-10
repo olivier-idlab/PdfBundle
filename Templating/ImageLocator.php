@@ -28,29 +28,37 @@ class ImageLocator implements ImageLocatorInterface
      * Converts image logical name in "BundleName:image-name.extension" format to absolute file path.
      *
      * @param string $logicalImageName
-     * @param string $publicSubDir
      *
      * @return string file path
      *
      * @throws /InvalidArgumentException If bundle does not exist.
      */
-    public function getImagePath($logicalImageName, $publicSubDir = '/Resources/public')
+    public function getImagePath($logicalImageName)
     {
         $pos = strpos($logicalImageName, ':');
-        $imagesSubDir = is_dir($publicSubDir.'/images') ? $publicSubDir.'/images/' : $publicSubDir.'/img/';
 
         // add support for ::$imagePath syntax as in twig
         // @see http://symfony.com/doc/current/book/page_creation.html#optional-step-3-create-the-template
         if ($pos === false || $pos === 0) {
-            return $this->kernel->getRootDir().$imagesSubDir.ltrim($logicalImageName, ':');
+            return static::getImageDir($this->kernel->getRootDir()).ltrim($logicalImageName, ':');
         }
 
         $bundleName = substr($logicalImageName, 0, $pos);
         $imageName = substr($logicalImageName, $pos + 1);
+        $bundlePath = $this->kernel->getBundle($bundleName)->getPath();
 
-        $bundle = $this->kernel->getBundle($bundleName);
-        $bundlePath = $bundle->getPath();
+        return static::getImageDir($bundlePath).$imageName;
+    }
 
-        return $bundlePath.$imagesSubDir.$imageName;
+    /**
+     * @param string $rootDir
+     *
+     * @return string dir path
+     *
+     * @throws /InvalidArgumentException If bundle does not exist.
+     */
+    private static function getImageDir($rootDir)
+    {
+        return $rootDir.'/Resources/public'.is_dir($rootDir.'/Resources/public/images') ? '/images/' : '/img/';
     }
 }
