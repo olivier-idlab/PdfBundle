@@ -13,21 +13,21 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Configuration definition class
- * 
+ *
  * @author Piotr Śliwa <peter.pl7@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
-	public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ps_pdf');
-        
+
         $rootNode->children()
                     ->arrayNode('cache')
                       ->children()
                         ->variableNode('options')
-                          ->defaultValue(array())
+                          ->defaultValue([])
                         ->end()
                         ->scalarNode('type')
                           ->defaultValue('File')

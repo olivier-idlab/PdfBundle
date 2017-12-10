@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * This bundle provides integration with PHPPdf library
- * 
+ *
  * @author Piotr Śliwa <peter.pl7@gmail.com>
  */
 class PsPdfBundle extends Bundle

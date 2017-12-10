@@ -9,7 +9,7 @@
             "name":     "Piotr Śliwa",
             "homepage": "http://psliwa.org",
             "email":    "me@psliwa.org"
-        }     
+        }
     ],
     "repositories": [{
         "type": "vcs",
