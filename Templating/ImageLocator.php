@@ -57,6 +57,6 @@ class ImageLocator implements ImageLocatorInterface
      */
     private static function getImageDir($rootDir)
     {
-        return $rootDir.'/Resources/public'.is_dir($rootDir.'/Resources/public/images') ? '/images/' : '/img/';
+        return $rootDir.'/Resources/public'.(is_dir($rootDir.'/Resources/public/images') ? '/images/' : '/img/');
     }
 }
